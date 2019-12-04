@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Essay Analysis Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+  <p>
+    Original Text:
+  </p>
+  <p>
+    <textarea id="textareaOriginal" rows="50" cols="100">
+      <%=originalText %>
+    </textarea>
+  </p>
+  <p>
+    Spell-checked Text:
+  </p>
+  <p>
+      <textarea id="textareaOriginal" rows="50" cols="100">
+        <%=spellCheckedText %>
+      </textarea>
+  </p>
+  <p>
+    Negative Words:
+  </p>
+  <p>
+      <ul>
+        <% negativeTextInstances.forEach(function(negativeTextInstance) { %>  
+        <li>
+          Sentence <%=negativeTextInstance.sentenceIndex%> 
+            [<%=negativeTextInstance.sentence%>], 
+          word <%=negativeTextInstance.wordIndex%> 
+            [<%=negativeTextInstance.word%>] is a flagged word.
+        </li>    
+        <% }); %>
+      </ul>
+        
+      </p>
+  <p>
+    Sentiment (Afinn Model):
+  </p>
+  <p>
+    <% if (afinnSentiment == "Positive") {%>
+        :-)
+    <% } else if (afinnSentiment == "Neutral") { %>
+        :-\
+    <% } else if (afinnSentiment == "Negative") { %>
+        :-(
+    <% } %>
+  </p>
+  <p>
+    Sentiment (Senticon Model):
+  </p>
+  <p>
+    <% if (senticonSentiment == "Positive") {%>
+        :-)
+    <% } else if (senticonSentiment == "Neutral") { %>
+        :-\
+    <% }  else if (senticonSentiment == "Negative") { %>
+        :-(
+    <% } %>
+  </p>
+  <p>
+    Sentiment (Pattern Model):
+  </p>
+  <p>
+    <% if (patternSentiment == "Positive") {%>
+        :-)
+    <% } else if (patternSentiment == "Neutral") { %>
+        :-\
+    <% }  else if (patternSentiment == "Negative") { %>
+        :-(
+    <% } %>
+  </p>
+  </body>
+  </html>
