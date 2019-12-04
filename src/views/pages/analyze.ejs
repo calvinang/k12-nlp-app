@@ -7,7 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
+
+    <style>
+      .sentiment {
+        font-weight: bold;
+      }
+      .positiveSentiment {
+        color: green;
+      }
+
+      .neutralSentiment {
+        color: yellow;
+      }
+
+      .negativeSentiment {
+        color: red;
+      }
+    </style>
+  </head>
 <body>
   <p>
     Original Text:
@@ -44,7 +61,7 @@
   <p>
     Sentiment (Afinn Model):
   </p>
-  <p>
+  <p class="sentiment <%= (afinnSentiment == "Positive" ? "positiveSentiment" : (afinnSentiment == "Neutral" ? "neutralSentiment" : (afinnSentiment == "Negative" ? "negativeSentiment" : ""))) %>">
     <% if (afinnSentiment == "Positive") {%>
         :-)
     <% } else if (afinnSentiment == "Neutral") { %>
@@ -56,7 +73,7 @@
   <p>
     Sentiment (Senticon Model):
   </p>
-  <p>
+  <p class="sentiment <%= (senticonSentiment == "Positive" ? "positiveSentiment" : (senticonSentiment == "Neutral" ? "neutralSentiment" : (senticonSentiment == "Negative" ? "negativeSentiment" : ""))) %>">
     <% if (senticonSentiment == "Positive") {%>
         :-)
     <% } else if (senticonSentiment == "Neutral") { %>
@@ -68,7 +85,7 @@
   <p>
     Sentiment (Pattern Model):
   </p>
-  <p>
+  <p class="sentiment <%= (patternSentiment == "Positive" ? "positiveSentiment" : (patternSentiment == "Neutral" ? "neutralSentiment" : (patternSentiment == "Negative" ? "negativeSentiment" : ""))) %>">
     <% if (patternSentiment == "Positive") {%>
         :-)
     <% } else if (patternSentiment == "Neutral") { %>
