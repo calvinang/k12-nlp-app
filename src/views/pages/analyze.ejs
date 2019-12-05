@@ -9,23 +9,150 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
-      .sentiment {
-        font-weight: bold;
-      }
-      .positiveSentiment {
-        color: green;
-      }
-
-      .neutralSentiment {
-        color: yellow;
-      }
-
-      .negativeSentiment {
-        color: red;
-      }
-    </style>
+        html{
+          height: 100%;
+        }
+          body {
+              background-color: #ececec;
+              height: 100%
+          }
+          h3 {
+            font-size: 18px;;
+          }
+          h4 {
+            font-size: 16px;
+            font-weight: bold;
+          }
+        .appContainer{
+              background-color: #bebebe;
+              margin: 20px auto 0 auto;
+              padding: 10px;
+              position: relative;
+              width: 90%;
+              height: 90%;
+              border-radius: 12px;
+  
+        }
+        .essayContainer{
+              width: 100%;
+              height: 280px;
+          
+        }
+        .essaySample {
+          width: 100%;
+          height: 200px;
+          background-color: #ffffff;
+        }
+        .textContainer{
+          width: 45%;
+          position: absolute;
+          top: 0;
+        }
+        .textContainer.left{
+          left: 10px;
+        }
+        .textContainer.right{
+          right: 10px;
+        }
+        .nlpReportContainer{
+          width: 100%;
+          height: 150px;
+        }
+        .sentiment {
+        }
+        .positiveSentiment {
+          background-color: #0ba123;
+        }
+  
+        .neutralSentiment {
+          background-color: #426ca0;
+        }
+  
+        .negativeSentiment {
+          background-color: #973135;
+        }
+        .sentimentReport{
+          width: 100%;
+          height: 250px;
+          position: relative;
+          color: #ffffff;
+        }
+        .sentimentModelResult {
+          border-radius: 8px;
+          padding: 10px;
+          width: 30%;
+          height: 200px;
+          display: inline-block;
+        }
+        .sentimentModelResult.left, .sentimentModelResult.center {
+          margin-left: 0px;
+          margin-right: 20px
+        }
+        .sentimentModelResult.right {
+          margin-left: 0px;
+        }
+      </style>
   </head>
 <body>
+<<<<<<< HEAD
+    <div class="appContainer">
+        <div class=essayContainer>
+            <div class="textContainer left">
+              <h3>Original Text:</h3>
+                <textarea id="textareaOriginal" class="essaySample" rows="50" cols="100">
+                  <%=originalText %>
+                </textarea>
+            </div>
+            <div class="textContainer right">
+              <h3>Normalized Text :</h3>
+              <p>
+                  <textarea id="textareaSpellChecked" class="essaySample" rows="50" cols="100">
+                    <%=normalizedText %>
+                  </textarea>
+              </p>
+            </div>
+        </div>
+        <div id="nlpReportContainer">
+            <div class="wordAnalysis">
+                <h3>Negative Words:</h3>
+                <ul>
+                  <% negativeTextInstances.forEach(function(negativeTextInstance) { %>  
+                  <li>
+                    Sentence <%=negativeTextInstance.sentenceIndex%> 
+                      [<%=negativeTextInstance.sentence%>], 
+                    word <%=negativeTextInstance.wordIndex%> 
+                      [<%=negativeTextInstance.word%>] is a flagged word.
+                  </li>    
+                  <% }); %>
+                </ul>
+            </div>
+            <div class="sentimentReport">
+              <h3>Sentiment Models</h3>
+                <div class="sentimentModelResult left <%= (afinnSentiment.sentiment == "Positive" ? "positiveSentiment" : (afinnSentiment.sentiment == "Neutral" ? "neutralSentiment" : (afinnSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>">
+                  <h4>Afinn Model:</h4>
+                  <p class="sentiment">
+                    &nbsp;Sentence <%=afinnSentiment.sentenceIndex%> [<%=afinnSentiment.sentence %>] &nbsp; Score: <%=afinnSentiment.sentenceScore%>
+                  </p>
+                </div>
+
+                <div class="sentimentModelResult center  <%= (senticonSentiment.sentiment == "Positive" ? "positiveSentiment" : (senticonSentiment.sentiment == "Neutral" ? "neutralSentiment" : (senticonSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>"">    
+                  <h4>Senticon Model:</h4>
+                    <p class="sentiment">
+                      &nbsp;Sentence <%=senticonSentiment.sentenceIndex%> [<%=senticonSentiment.sentence %>] &nbsp; Score: <%=senticonSentiment.sentenceScore%>
+                    </p>
+                </div>
+
+                <div class="sentimentModelResult center <%= (patternSentiment.sentiment == "Positive" ? "positiveSentiment" : (patternSentiment.sentiment == "Neutral" ? "neutralSentiment" : (patternSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>">    
+                  <h4>Pattern Model:</h4>
+                      <p class="sentiment">
+                        &nbsp;Sentence <%=patternSentiment.sentenceIndex%> [<%=patternSentiment.sentence %>] &nbsp; Score: <%=patternSentiment.sentenceScore%>
+                      </p>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+=======
   <p>
     Original Text:
   </p>
@@ -105,5 +232,6 @@
   <p>
     <button type="button" onclick="location.href='/';"><i class="material-icons left">arrow_back</i>Back</button>
   </p>
+>>>>>>> ab4740d3a3aa69dc89dc7249e82c4e7f60a60305
   </body>
   </html>
