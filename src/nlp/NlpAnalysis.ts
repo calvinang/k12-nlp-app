@@ -1,15 +1,15 @@
 
 import { FlaggedText } from "./flaggedText";
+import { TextSentiment } from "./textSentiment";
 
 
 export class NlpAnalysis {
   constructor(public originalText: string, 
-    public spellCheckedText: string,
+    public normalizedText: string,
     public negativeTextInstances:FlaggedText[],
-    public satTextInstances: FlaggedText[], 
-    public afinnSentiment: string,
-    public senticonSentiment: string,
-    public patternSentiment: string) 
+    public afinnSentiment: TextSentiment,
+    public senticonSentiment: TextSentiment,
+    public patternSentiment: TextSentiment) 
     {}
 
 }

@@ -1,6 +1,9 @@
 import natural, { Tokenizer } from "natural";
 import {FlaggedText} from './flaggedText';
 import { NlpAnalysis } from "./NlpAnalysis";
+import {SpellCheckDictionary } from "./spellCheckDictionary";
+import { WordOverridesMap } from "./wordOverridesMap";
+import { TextSentiment } from "./textSentiment";
 
 declare module "natural" {
 
@@ -9,10 +12,16 @@ declare module "natural" {
   }
 }
 
+declare module "natural" {
+  class SentimentAnalyzer {
+    constructor(language: string, stemmer: any, type: string);
+    getSentiment(words: string[]) : number;
+  }
+}
 export class NlpTextAnalyzer { 
+  private static  NEUTRAL_THRESHOLD : number = 0.05;
+
   static NegativeWords: Set<string> = new Set<string>(["depression", "depressed", "sad", "kill", "suicide", "alcohol", "drink", "shot"]);
-  static SatWords: Set<string> = new Set<string>([
-  'Abate',  'Abstract',  'Abysmal',  'Accordingly',  'Acquisition',  'Adapt',  'Adept',  'Adequate',  'Advent',  'Adversarial',  'Advocate',  'Aesthetic',  'Afford',  'Agitate',  'Allow',  'Allude',  'Altercation',  'Ambiguous',  'Ambitious',  'Ambivalence',  'Analogous',  'Annihilate',  'Anomaly',  'Anticipate',  'Antipathy',  'Apex',  'Apprehension',  'Articulate',  'Artificial',  'Assertion',  'Austere',  'Authenticity',  'Avenue',  'Avid',  'Basic',  'Bear',  'Benevolent',  'Bias',  'Bittersweet',  'Bolster',  'Boost',  'Brawl',  'Brevity',  'Candid',  'Candor',  'Capitalize',  'Capture',  'Civic',  'Clinical',  'Clout',  'Coarse',  'Coincide',  'Commission',  'Comparable',  'Competent',  'Complacent',  'Complement',  'Concede',  'Conceive',  'Condone',  'Conducive',  'Conduct',  'Confide',  'Confine',  'Consensus',  'Constitute',  'Contemplate',  'Contend',  'Contradict',  'Controversial',  'Conventional',  'Convey',  'Conviction',  'Corroborate',  'Counteract',  'Counterargument',  'Counterproductive',  'Culmination',  'Cultivate',  'Decree',  'Deference',  'Deficient',  'Demonstrate',  'Demur',  'Deplete',  'Desolate',  'Devise',  'Dilemma',  'Diligence',  'Diminish',  'Dire',  'Discord',  'Disdain',  'Dismay',  'Disparage',  'Dispatch',  'Diversification',  'Doctrine',  'Dominion',  'Dreary',  'Dubious',  'Eccentric',  'Egregious',  'Eloquent',  'Eminent',  'Emit',  'Emphatic',  'Empirical',  'Endow',  'Endure',  'Entail',  'Entrenched',  'Enumerate',  'Envy',  'Erratic',  'Establish',  'Evoke',  'Exacerbate',  'Excel',  'Exert',  'Exhilarating',  'Expend',  'Exploit',  'Facilitate',  'Feasibility',  'Ferocity',  'Fiscal',  'Flourish',  'Fluctuate',  'Foment',  'Foreseeable',  'Frankly',  'Freewheeling',  'Fundamental',  'Galvanizing',  'Geriatric',  'Hostile',  'Hypothetical',  'Ignominious',  'Impart',  'Impartiality',  'Imposing',  'Imposition',  'Imprudent',  'Incite',  'Indifference',  'Indiscriminately',  'Indulge',  'Infer',  'Innovative',  'Insatiable',  'Inversion',  'Invoke',  'Irreconcilable',  'Lament',  'Locomotion',  'Lucrative',  'Malicious',  'Malleable',  'Materialistic',  'Melodramatic',  'Modest',  'Modify',  'Momentous',  'Novel',  'Nuance',  'Null',  'Objectivity',  'Obsolete',  'Omnipotent',  'Onset',  'Opine',  'Ornate',  'Oust',  'Paramount',  'Peculiar',  'Perish',  'Persecute',  'Petulant',  'Pinnacle',  'Pitiable',  'Plausible',  'Postulate',  'Potent',  'Pragmatic',  'Precedent',  'Predecessor',  'Prescribe',  'Principle',  'Prohibit',  'Prompt',  'Promulgate',  'Prosecute',  'Provocative',  'Qualitative', 'Quantitative',  'Quirk',  'Ramify',  'Rash',  'Raw',  'Readily',  'Reconsideration',  'Reform',  'Refute',  'Reinforce',  'Reluctantly',  'Renounce',  'Reproach',  'Repudiate',  'Retention',  'Satiated',  'Savvy',  'Scandalous',  'Scorn',  'Scrupulous',  'Scrutinize',  'Secrete',  'Sentiment',  'Sheer',  'Simple',  'Sinister',  'Solidarity',  'Sparingly',  'Spawn',  'Spur',  'Squalid',  'Stark',  'Static',  'Subordinate',  'Subsequently',  'Substantial',  'Substantiate',  'Subtle',  'Sufficient',  'Surly',  'Surmount',  'Susceptible',  'Tactful',  'Taut',  'Teeming',  'Temperament',  'Tentative',  'Transparent',  'Treacherous',  'Tremendous',  'Ubiquitous',  'Unadorned',  'Undermine',  'Underscore',  'Undulate',  'Unilateral',  'Unjust',  'Unmitigated',  'Unprecedented',  'Unveil',  'Urge',  'Validate',  'Viability',  'Vital',  'Vow',  'Warrant',  'Yield' ]);
   public static getFlaggedText(text: string, wordSet: Set<string>) : FlaggedText[] {
     let flaggedTextInstances: FlaggedText[]= [];  
     let sentenceTokenizer : natural.Tokenizer = new natural.SentenceTokenizer();
@@ -21,7 +30,7 @@ export class NlpTextAnalyzer {
         let wordTokenizer : natural.Tokenizer = new natural.TreebankWordTokenizer();
         let words: string[] = wordTokenizer.tokenize(sentence);
         words.forEach((word: string, wordIndex: number) => {
-            if (wordSet.has(word)) {  
+            if (wordSet.has(word.toLowerCase())) {  
               let flaggedText: FlaggedText = new FlaggedText(sentence, sentenceIndex, word, wordIndex);
               flaggedTextInstances.push(flaggedText);
             }
@@ -31,36 +40,95 @@ export class NlpTextAnalyzer {
     return flaggedTextInstances;
   }
 
-  public static getSpellCheckedText(text: string) : string {
-    text;
-    let result :string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, ";
-    return result;
+  public static getNormalizedText(text: string) : string {
+    let wordOverridesMap: WordOverridesMap = new WordOverridesMap(); 
+    let resultantSentences : string[] = [];
+    let alphabeticRegExp : any = /^[a-zA-Z]+$/;
+    let spellcheck : natural.Spellcheck = new natural.Spellcheck(SpellCheckDictionary.Corpus);
+    let sentenceTokenizer : natural.Tokenizer = new natural.SentenceTokenizer();
+    let sentences: string[] = sentenceTokenizer.tokenize(text);
+    sentences.forEach((sentence: string, sentenceIndex: number) => {
+      // includes punctuation
+      let wordTokenizer : natural.Tokenizer = new natural.TreebankWordTokenizer();
+      let words: string[] = wordTokenizer.tokenize(sentence);
+      let finalWords: string[] = [];
+      words.forEach((word: string, wordIndex: number) => {
+        let finalWord: string = word;
+        if (wordOverridesMap.has(word.toLowerCase())) {
+          finalWord = wordOverridesMap.get(word.toLowerCase());
+        }
+
+        if (alphabeticRegExp.test(word) && !spellcheck.isCorrect(word.toLowerCase())) {
+          let corrections: string[] = spellcheck.getCorrections(word.toLowerCase(), 1);
+          if (corrections.length != 0) {
+            finalWord = corrections[0];
+          }
+        }
+
+        finalWords.push(finalWord);
+      });
+
+      let finalSentence: string = finalWords.join(' ');
+      resultantSentences.push(finalSentence);
+    });
+  
+    let resultantText : string = resultantSentences.join(' ');
+    return resultantText;
   }
 
-  public static getSentiment(text: string, method: string) : string {
-    text;
-    let result: string;
-    if (method == "afinn")  
-      result = "Positive";
-
-    if (method == "senticon")
-      result = "Neutral";
+  
+  public static getSentiment(text: string, method: string) : TextSentiment {
     
-    if (method == "pattern")
-      result = "Negative";
+    let stemmer : natural.Stemmer = natural.PorterStemmer;
+    let analyzer :natural.SentimentAnalyzer = new natural.SentimentAnalyzer("English", stemmer, method);
+    
+      
+    let sentenceTokenizer : natural.Tokenizer = new natural.SentenceTokenizer();
+    let sentences: string[] = sentenceTokenizer.tokenize(text);
+    let lowestSentiment : TextSentiment = new TextSentiment("negative", "", 0, 99999);
+    let highestSentiment : TextSentiment = new TextSentiment("positive", "", 0, -99999);
 
-    return result;   
+    sentences.forEach((sentence: string, sentenceIndex: number) => {
+      console.log(analyzer.getSentiment(["I", "like", "cherries"]));  
+      let wordTokenizer : natural.Tokenizer = new natural.TreebankWordTokenizer();
+      let words: string[] = wordTokenizer.tokenize(sentence);
+      let sentiment: number = analyzer.getSentiment(words);  
+      let sentimentText : string = this.getSentimentText(sentiment);
+      if (sentiment <= lowestSentiment.sentenceScore)  {
+        lowestSentiment = new TextSentiment(sentimentText, sentence, sentenceIndex, sentiment);
+      }
+      else if (sentiment >= highestSentiment.sentenceScore) {
+        highestSentiment = new TextSentiment(sentimentText, sentence, sentenceIndex, sentiment);
+      }
+    });
+
+    // lowest sentiment takes precedence if the score is negative
+    if (lowestSentiment.sentenceScore < 0) {
+      return lowestSentiment;
+    }
+
+    return highestSentiment;
+  }
+
+  private static getSentimentText(sentiment: number) : string {
+    if (Math.abs(sentiment) > this.NEUTRAL_THRESHOLD) {
+      return "Negative";
+    }
+    else if (sentiment > this.NEUTRAL_THRESHOLD) {
+      return "Positive";
+    }
+
+    return "Neutral";
   }
 
   public static getAnalysis(text: string) : NlpAnalysis {
-    let spellCheckedText : string = this.getSpellCheckedText(text);
-    let negativeWordInstances : FlaggedText[] = this.getFlaggedText(text, NlpTextAnalyzer.NegativeWords);
-    let satWordInstances: FlaggedText[] = this.getFlaggedText(text, NlpTextAnalyzer.SatWords);
-    let afinnSentiment: string = this.getSentiment(text, "afinn");
-    let senticonSentiment: string = this.getSentiment(text, "senticon");
-    let patternSentiment: string = this.getSentiment(text, "pattern");
+    let normalizedText : string = this.getNormalizedText(text);
+    let negativeWordInstances : FlaggedText[] = this.getFlaggedText(normalizedText, NlpTextAnalyzer.NegativeWords);
+    let afinnSentiment: TextSentiment = this.getSentiment(normalizedText, "afinn");
+    let senticonSentiment: TextSentiment = this.getSentiment(normalizedText, "senticon");
+    let patternSentiment: TextSentiment = this.getSentiment(normalizedText, "pattern");
 
-    let analysis: NlpAnalysis = new NlpAnalysis(text, spellCheckedText, negativeWordInstances, satWordInstances, afinnSentiment, senticonSentiment, patternSentiment);
+    let analysis: NlpAnalysis = new NlpAnalysis(text, normalizedText, negativeWordInstances, afinnSentiment, senticonSentiment, patternSentiment);
     return analysis;
     
   }

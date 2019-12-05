@@ -8,6 +8,7 @@ const port = 8080; // default port to listen
 
 var app = express();
 
+app.use(express.static(path.join(__dirname, 'views')));
 // set the view engine to ejs
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

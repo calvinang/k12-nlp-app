@@ -35,11 +35,11 @@
     </textarea>
   </p>
   <p>
-    Spell-checked Text:
+    Normalized Text (spell checked plus with contractions expanded):
   </p>
   <p>
-      <textarea id="textareaOriginal" rows="50" cols="100">
-        <%=spellCheckedText %>
+      <textarea id="textareaSpellChecked" rows="50" cols="100">
+        <%=normalizedText %>
       </textarea>
   </p>
   <p>
@@ -61,38 +61,42 @@
   <p>
     Sentiment (Afinn Model):
   </p>
-  <p class="sentiment <%= (afinnSentiment == "Positive" ? "positiveSentiment" : (afinnSentiment == "Neutral" ? "neutralSentiment" : (afinnSentiment == "Negative" ? "negativeSentiment" : ""))) %>">
-    <% if (afinnSentiment == "Positive") {%>
+  <p class="sentiment <%= (afinnSentiment.sentiment == "Positive" ? "positiveSentiment" : (afinnSentiment.sentiment == "Neutral" ? "neutralSentiment" : (afinnSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>">
+    <% if (afinnSentiment.sentiment == "Positive") {%>
         :-)
-    <% } else if (afinnSentiment == "Neutral") { %>
+    <% } else if (afinnSentiment.sentiment == "Neutral") { %>
         :-\
-    <% } else if (afinnSentiment == "Negative") { %>
+    <% } else if (afinnSentiment.sentiment == "Negative") { %>
         :-(
     <% } %>
+    &nbsp;Sentence <%=afinnSentiment.sentenceIndex%> [<%=afinnSentiment.sentence %>] &nbsp; Score: <%=afinnSentiment.sentenceScore%>
   </p>
   <p>
     Sentiment (Senticon Model):
   </p>
-  <p class="sentiment <%= (senticonSentiment == "Positive" ? "positiveSentiment" : (senticonSentiment == "Neutral" ? "neutralSentiment" : (senticonSentiment == "Negative" ? "negativeSentiment" : ""))) %>">
-    <% if (senticonSentiment == "Positive") {%>
+  <p class="sentiment <%= (senticonSentiment.sentiment == "Positive" ? "positiveSentiment" : (senticonSentiment.sentiment == "Neutral" ? "neutralSentiment" : (senticonSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>">
+    <% if (senticonSentiment.sentiment == "Positive") {%>
         :-)
-    <% } else if (senticonSentiment == "Neutral") { %>
+    <% } else if (senticonSentiment.sentiment == "Neutral") { %>
         :-\
-    <% }  else if (senticonSentiment == "Negative") { %>
+    <% } else if (senticonSentiment.sentiment == "Negative") { %>
         :-(
     <% } %>
+    &nbsp;Sentence <%=senticonSentiment.sentenceIndex%> [<%=senticonSentiment.sentence %>] &nbsp; Score: <%=senticonSentiment.sentenceScore%>
   </p>
   <p>
     Sentiment (Pattern Model):
   </p>
-  <p class="sentiment <%= (patternSentiment == "Positive" ? "positiveSentiment" : (patternSentiment == "Neutral" ? "neutralSentiment" : (patternSentiment == "Negative" ? "negativeSentiment" : ""))) %>">
-    <% if (patternSentiment == "Positive") {%>
+  <p class="sentiment <%= (patternSentiment.sentiment == "Positive" ? "positiveSentiment" : (patternSentiment.sentiment == "Neutral" ? "neutralSentiment" : (patternSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>">
+    <% if (patternSentiment.sentiment == "Positive") {%>
         :-)
-    <% } else if (patternSentiment == "Neutral") { %>
+    <% } else if (patternSentiment.sentiment == "Neutral") { %>
         :-\
-    <% }  else if (patternSentiment == "Negative") { %>
+    <% } else if (patternSentiment.sentiment == "Negative") { %>
         :-(
     <% } %>
+    &nbsp;Sentence <%=patternSentiment.sentenceIndex%> [<%=patternSentiment.sentence %>] &nbsp; Score: <%=patternSentiment.sentenceScore%>
   </p>
+  
   </body>
   </html>
