@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import natural, { Tokenizer } from "natural";
 import { NlpAnalysis } from "./nlp/NlpAnalysis";
 import { NlpTextAnalyzer } from "./nlp/NlpTextAnalyzer";
-const port = 8080; // default port to listen
+const port = 8081; // default port to listen
 
 var app = express();
 

@@ -25,7 +25,7 @@ export class NlpTextAnalyzer {
     = new Map<string, natural.SentimentAnalyzer>();
 
   static NegativeWords: Set<string> = new Set<string>(["depression", "depressed", "sad", "kill", "suicide", "alcohol", "drink", "shot", 
-    "toxic", "stress", "stressed", "misery", "hurts", "horrid", "failure", "pain", "help"]);
+    "toxic", "stress", "stressed", "misery", "hurts", "horrid", "failure", "pain", "help", "disappointed", "cancer", "hate"]);
   public static getFlaggedText(text: string, wordSet: Set<string>) : FlaggedText[] {
     let flaggedTextInstances: FlaggedText[]= [];  
     let sentenceTokenizer : natural.Tokenizer = new natural.SentenceTokenizer();

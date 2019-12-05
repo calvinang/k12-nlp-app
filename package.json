@@ -2,7 +2,7 @@
   "name": "essay-nlp",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/app.js",
   "scripts": {
     "build": "tsc && cp -R src/views/* dist/views/",
     "start": "node .",
