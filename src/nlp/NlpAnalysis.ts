@@ -12,4 +12,5 @@ export class NlpAnalysis {
     public patternSentiment: TextSentiment) 
     {}
 
+    public emailSent: boolean = false;
 }

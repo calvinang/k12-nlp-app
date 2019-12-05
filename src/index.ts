@@ -23,7 +23,7 @@ app.get( "/", ( req: any, res: any ) => {
 
 app.post("/submit-essay", (req: any, res: any) => { 
     let essayText: string = req.body.essayText;
-    console.log(essayText);
+
     let analysis: NlpAnalysis = NlpTextAnalyzer.getAnalysis(essayText);
  
     res.render('./pages/analyze', analysis);

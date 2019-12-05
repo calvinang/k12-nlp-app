@@ -10,6 +10,11 @@ export class WordOverridesMap extends Map<string, string> {
     this.set("'m", "am");
     this.set("'re", "are");
     this.set("kil", "kill");
-    
+
+    // takes care of "won't" case - a bit of a hack but "wo" is not a word anyway
+    this.set("wo", "will")   
+
+    // takes care of "can't" case
+    this.set("ca", "can")
   }
 }

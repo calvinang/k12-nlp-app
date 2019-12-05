@@ -97,6 +97,13 @@
     <% } %>
     &nbsp;Sentence <%=patternSentiment.sentenceIndex%> [<%=patternSentiment.sentence %>] &nbsp; Score: <%=patternSentiment.sentenceScore%>
   </p>
-  
+  <p>
+    <% if (emailSent) { %>
+      E-mail notification sent.
+    <% } %>
+  </p>
+  <p>
+    <button type="button" onclick="location.href='/';"><i class="material-icons left">arrow_back</i>Back</button>
+  </p>
   </body>
   </html>

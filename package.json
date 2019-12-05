@@ -15,9 +15,11 @@
   "dependencies": {
     "@types/express": "^4.17.2",
     "@types/natural": "^0.6.1",
+    "@types/nodemailer": "^6.2.2",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "natural": "^0.6.3"
+    "natural": "^0.6.3",
+    "nodemailer": "^6.4.0"
   },
   "devDependencies": {
     "typescript": "^3.7.2"
