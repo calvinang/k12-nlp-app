@@ -94,7 +94,6 @@
       </style>
   </head>
 <body>
-<<<<<<< HEAD
     <div class="appContainer">
         <div class=essayContainer>
             <div class="textContainer left">
@@ -135,7 +134,7 @@
                   </p>
                 </div>
 
-                <div class="sentimentModelResult center  <%= (senticonSentiment.sentiment == "Positive" ? "positiveSentiment" : (senticonSentiment.sentiment == "Neutral" ? "neutralSentiment" : (senticonSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>"">    
+                <div class="sentimentModelResult center  <%= (senticonSentiment.sentiment == "Positive" ? "positiveSentiment" : (senticonSentiment.sentiment == "Neutral" ? "neutralSentiment" : (senticonSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>">    
                   <h4>Senticon Model:</h4>
                     <p class="sentiment">
                       &nbsp;Sentence <%=senticonSentiment.sentenceIndex%> [<%=senticonSentiment.sentence %>] &nbsp; Score: <%=senticonSentiment.sentenceScore%>
@@ -152,86 +151,5 @@
         </div>
     </div>
   
-=======
-  <p>
-    Original Text:
-  </p>
-  <p>
-    <textarea id="textareaOriginal" rows="50" cols="100">
-      <%=originalText %>
-    </textarea>
-  </p>
-  <p>
-    Normalized Text (spell checked plus with contractions expanded):
-  </p>
-  <p>
-      <textarea id="textareaSpellChecked" rows="50" cols="100">
-        <%=normalizedText %>
-      </textarea>
-  </p>
-  <p>
-    Negative Words:
-  </p>
-  <p>
-      <ul>
-        <% negativeTextInstances.forEach(function(negativeTextInstance) { %>  
-        <li>
-          Sentence <%=negativeTextInstance.sentenceIndex%> 
-            [<%=negativeTextInstance.sentence%>], 
-          word <%=negativeTextInstance.wordIndex%> 
-            [<%=negativeTextInstance.word%>] is a flagged word.
-        </li>    
-        <% }); %>
-      </ul>
-        
-      </p>
-  <p>
-    Sentiment (Afinn Model):
-  </p>
-  <p class="sentiment <%= (afinnSentiment.sentiment == "Positive" ? "positiveSentiment" : (afinnSentiment.sentiment == "Neutral" ? "neutralSentiment" : (afinnSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>">
-    <% if (afinnSentiment.sentiment == "Positive") {%>
-        :-)
-    <% } else if (afinnSentiment.sentiment == "Neutral") { %>
-        :-\
-    <% } else if (afinnSentiment.sentiment == "Negative") { %>
-        :-(
-    <% } %>
-    &nbsp;Sentence <%=afinnSentiment.sentenceIndex%> [<%=afinnSentiment.sentence %>] &nbsp; Score: <%=afinnSentiment.sentenceScore%>
-  </p>
-  <p>
-    Sentiment (Senticon Model):
-  </p>
-  <p class="sentiment <%= (senticonSentiment.sentiment == "Positive" ? "positiveSentiment" : (senticonSentiment.sentiment == "Neutral" ? "neutralSentiment" : (senticonSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>">
-    <% if (senticonSentiment.sentiment == "Positive") {%>
-        :-)
-    <% } else if (senticonSentiment.sentiment == "Neutral") { %>
-        :-\
-    <% } else if (senticonSentiment.sentiment == "Negative") { %>
-        :-(
-    <% } %>
-    &nbsp;Sentence <%=senticonSentiment.sentenceIndex%> [<%=senticonSentiment.sentence %>] &nbsp; Score: <%=senticonSentiment.sentenceScore%>
-  </p>
-  <p>
-    Sentiment (Pattern Model):
-  </p>
-  <p class="sentiment <%= (patternSentiment.sentiment == "Positive" ? "positiveSentiment" : (patternSentiment.sentiment == "Neutral" ? "neutralSentiment" : (patternSentiment.sentiment == "Negative" ? "negativeSentiment" : ""))) %>">
-    <% if (patternSentiment.sentiment == "Positive") {%>
-        :-)
-    <% } else if (patternSentiment.sentiment == "Neutral") { %>
-        :-\
-    <% } else if (patternSentiment.sentiment == "Negative") { %>
-        :-(
-    <% } %>
-    &nbsp;Sentence <%=patternSentiment.sentenceIndex%> [<%=patternSentiment.sentence %>] &nbsp; Score: <%=patternSentiment.sentenceScore%>
-  </p>
-  <p>
-    <% if (emailSent) { %>
-      E-mail notification sent.
-    <% } %>
-  </p>
-  <p>
-    <button type="button" onclick="location.href='/';"><i class="material-icons left">arrow_back</i>Back</button>
-  </p>
->>>>>>> ab4740d3a3aa69dc89dc7249e82c4e7f60a60305
   </body>
   </html>
