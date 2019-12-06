@@ -31,3 +31,9 @@ Results are reported in the form of feedback following text submission as well a
 ## Known Caveats
 - E-mails are sent using gmail's server and are currently blocked 95% of the time by K12's firewall. It worked from the Crowne Plaza in Herndon, VA as well as with a mobile device.
 - Entering a single sentence containing only one or two words with no ending punctuation results in a thrown exception. (Tokenizer bug?)
+- Spellcheck is limited to the first suggestion
+
+## Potential Enhancements 
+- Run-on typo correction ("amstressful" should become "am stressful") 
+- Configurable flagged word lists
+- Spellcheck corrections based on parts-of-speech rather than simply the first suggestion
