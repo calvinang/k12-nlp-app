@@ -18,12 +18,16 @@ A Node.js web application that takes in text and performs basic NLP operations o
 Results are reported in the form of feedback following text submission as well as in the form of an e-mail notification should any negative elements be detected in the text. For demo purposes, the destination e-mail address is currently hardwired to k12testnlp@gmail.com.  
 
 ## Third-Party APIs Employed
-- Node.js https://nodejs.org/en/ - HTTP server
+- Node.js https://nodejs.org/en/ - HTTP server using Javascript server-side
+- Express.js https://expressjs.com/ - Minimal web framework
+- EJS https://ejs.co/ - templating engine similar to syntax employed by classic Microsoft Active Server Pages
 - Natural Node https://github.com/NaturalNode/natural - Tokenization, Spellcheck, and Sentiment modules
+- Nodemailer https://nodemailer.com/about/ - E-mail module for Node.js applications
+- Typescript https://www.typescriptlang.org/ - Object-oriented, type-safe wrapper for Javascript that transpiles to Javascript
 
 ## Other Third-Party Elements
 - SCOWL http://wordlist.aspell.net/# / https://sourceforge.net/projects/wordlist/files/SCOWL/2019.10.06/scowl-2019.10.06.tar.gz/download?use_mirror=astuteinternet - source for spellcheck word lists
 
 ## Known Caveats
-- E-mails are sent using gmail's server and are currently blocked 90% of the time by K12's firewall. It worked from the Crowne Plaza in Herndon, VA. 
+- E-mails are sent using gmail's server and are currently blocked 95% of the time by K12's firewall. It worked from the Crowne Plaza in Herndon, VA as well as with a mobile device.
 - Entering a single sentence containing only one or two words with no ending punctuation results in a thrown exception. (Tokenizer bug?)
