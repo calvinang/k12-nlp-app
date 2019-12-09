@@ -1,7 +1,7 @@
 # k12-nlp-app
 K12 NLP Demo App
 
-## Contributors/Ideators
+## Contributors
 - Rick Parris (Team Lead/Dev)
 - Amanda Ferguson
 - Calvin Ang (Dev)  
